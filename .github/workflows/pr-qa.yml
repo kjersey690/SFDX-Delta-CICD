@@ -16,7 +16,11 @@ jobs:
       - uses: sfdx-actions/setup-sfdx@v1
         with:
           sfdx-auth-url: ${{ secrets.AUTH_SECRET }}
-          
+     
+      - name: Install Salesforce CLI 
+        run: |
+          npm install sfdx-cli
+          node_modules/sfdx-cli/bin/run version          
       - name: 'Install App and Create Delta'
         run: |
           sfdx plugins:install sfdx-git-delta
