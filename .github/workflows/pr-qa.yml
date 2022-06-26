@@ -24,7 +24,7 @@ jobs:
           git fetch --all
           git checkout -b pr
           git --no-pager diff --name-status pr origin/Qa
-          sfdx sgd:source:delta --to pr --from origin/Qa --repo . --output .
+          sfdx-git-delta --to pr --from origin/Qa --repo . --output .
           cat package.xml 
       - name: 'Generate SFDX Delta Package'
         run: |
