@@ -19,7 +19,7 @@ jobs:
      
       - name: Install Salesforce CLI 
         run: |
-          npm install sfdx-cli
+          npm install --global sfdx-cli@latest
           node_modules/sfdx-cli/bin/run version          
       - name: Install sfdxGit delta
         run: |
