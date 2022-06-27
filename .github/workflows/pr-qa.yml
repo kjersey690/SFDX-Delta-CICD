@@ -34,8 +34,9 @@ jobs:
           git --no-pager diff --name-status pr origin/Qa
           sfdx sgd:source:delta --to pr --from origin/Qa --repo . --output .
           cat package/package.xml  
+          
       - name: 'Convert Metadata'
         run: sfdx force:source:convert --manifest=package/package.xml  --outputdir=convert
       - name: 'Run Test on Metadata'
-        run: sfdx force:mdapi:deploy -u ozarkqa --deploydir=convert --testlevel=RunLocalTests --checkonly -w30 
+        run: sfdx force:mdapi:deploy -u k.johnson@ozarkinc.com --deploydir=convert --testlevel=RunLocalTests --checkonly -w30 
 
