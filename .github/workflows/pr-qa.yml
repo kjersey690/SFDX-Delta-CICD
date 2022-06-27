@@ -38,5 +38,5 @@ jobs:
       - name: 'Convert Metadata'
         run: sfdx force:source:convert --manifest=package/package.xml  --outputdir=convert
       - name: 'Run Test on Metadata'
-        run: sfdx force:mdapi:deploy -u k.johnson@ozarkinc.com --deploydir=convert --testlevel=RunLocalTests --checkonly -w30 
+        run: sfdx force:mdapi:deploy -u k.johnson@ozarkinc.com.qa --deploydir=convert --testlevel=RunLocalTests --checkonly -w30 
 
