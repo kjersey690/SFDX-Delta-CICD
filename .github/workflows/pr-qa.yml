@@ -35,7 +35,7 @@ jobs:
           sfdx sgd:source:delta --to pr --from origin/Qa --repo . --output .
           cat package/package.xml  
       - name: 'Convert Metadata'
-        run: sfdx force:source:deploy -x manifest/package.xml  --manifest=package/package.xml -u https://okzarkinc.my.salesforce.com -w 20 -c
+        run: sfdx force:source:deploy -x manifest/package.xml -w 20 -c
       - name: 'Run Test on Metadata'
         run: sfdx force:mdapi:deploy -u ozarkqa --deploydir=convert --testlevel=RunLocalTests --checkonly -w30 
 
