@@ -34,6 +34,7 @@ jobs:
           git --no-pager diff --name-status pr origin/Qa
           sfdx sgd:source:delta --to pr --from origin/Qa --repo . --output .
           cat package/package.xml  
+          cat destructiveChanges/destructiveChanges.xml
           
       - name: 'Convert Metadata'
         run: sfdx force:source:convert --manifest=package/package.xml  --outputdir=convert
