@@ -1,0 +1,41 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on:
+  pull_request:
+    branches: [ Qa ]
+
+jobs:
+  build:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - uses: sfdx-actions/setup-sfdx@v1
+        with:
+          sfdx-auth-url: ${{ secrets.AUTH_SECRET }}
+     
+      - name: Install Salesforce CLI 
+        run: |
+         npm install sfdx-cli
+         node_modules/sfdx-cli/bin/run version          
+      - name: Install sfdxGit delta
+        run: |
+          echo y | node_modules/sfdx-cli/bin/run plugins:install sfdx-git-delta
+          node_modules/sfdx-cli/bin/run plugins
+      - name: Generate SFDX Delta Package
+        run: |
+          git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+          git fetch --all
+          git checkout -b pr
+          git --no-pager diff --name-status pr origin/Qa
+          sfdx sgd:source:delta --to pr --from origin/Qa --repo . --output .
+          cat package/package.xml  
+          cat destructiveChanges/destructiveChanges.xml
+          
+      - name: 'Convert Metadata'
+        run: sfdx force:source:convert --manifest=package/package.xml  --outputdir=convert
+      - name: 'Deploy Metadata'
+        run: sfdx force:mdapi:deploy -u ${{secrets.USERNAME}} --deploydir=convert  -w 30 
