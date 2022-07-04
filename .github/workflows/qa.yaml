@@ -29,11 +29,10 @@ jobs:
         run: |
           git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
           git fetch --all
-          git checkout -b pr
-          git --no-pager diff --name-status pr origin/Qa
-          sfdx sgd:source:delta --to pr --from origin/Qa --repo . --output .
+          git --no-pager diff --name-status Qa origin/main
+          sfdx sgd:source:delta --to Qa --from origin/main --repo . --output .
           cat package/package.xml  
-          cat destructiveChanges/destructiveChanges.xml
+        
           
       - name: 'Deploy Metadata'
         run: sfdx force:source:deploy -x manifest/package.xml -u ${{ secrets.USERNAME }}  -w 20 
